@@ -1,3 +1,27 @@
+# zero-password-api
+
+Serves password rules from the full version of [zero-password](https://github.com/startergate/zero-password-db). The lite version (`zero-password/lite`) and the Chrome extension call this API.
+
+## API
+
+### `GET /api/{domain}`
+
+`domain` is matched against the rule database.
+
+- `200`: a rule was found. `domain` is the database entry that matched (it can differ from the requested domain once domain normalization lands), and `$ref` is already resolved.
+
+  ```json
+  { "domain": "nid.naver.com", "rule": { "length": { "min": 8, "max": 16 }, "...": "..." } }
+  ```
+
+- `404`: no rule for the domain.
+
+  ```json
+  { "error": "not_found" }
+  ```
+
+Both responses are `application/json`. The `rule` object follows the `Rule` type exported by `zero-password`.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
