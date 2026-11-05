@@ -1,20 +1,24 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import getRuleFrom0PasswordDB from "zero-password";
+import {findRule, type RuleMatch} from "zero-password";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+// Contract with zero-password/lite. `domain` is the database entry that matched the requested domain,
+// which can be a parent domain of the request (login.coupang.com -> www.coupang.com).
+export type RuleResponse = RuleMatch
+export type ErrorResponse = { error: "not_found" }
+
+const handler = async (req: NextApiRequest, res: NextApiResponse<RuleResponse | ErrorResponse>) => {
     const domain = req.query.domain;
     if (!domain || Array.isArray(domain)) {
-        res.status(404).send('Not Found')
+        res.status(404).json({error: "not_found"})
         return
     }
-    const rule = getRuleFrom0PasswordDB(domain)
-    console.log(domain, rule)
-    if (!rule) {
-        res.status(404).send('Not Found')
+    const match = findRule(domain)
+    if (!match) {
+        res.status(404).json({error: "not_found"})
         return
     }
 
-    res.status(200).send(rule);
+    res.status(200).json(match);
 }
 
 export default handler
