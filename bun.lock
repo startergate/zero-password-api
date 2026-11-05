@@ -8,7 +8,7 @@
         "next": "16.2.4",
         "react": "19.2.4",
         "react-dom": "19.2.4",
-        "zero-password": "^0.0.2",
+        "zero-password": "^0.1.0",
       },
       "devDependencies": {
         "@tailwindcss/postcss": "^4",
@@ -845,7 +845,7 @@
 
     "yocto-queue": ["yocto-queue@0.1.0", "", {}, "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="],
 
-    "zero-password": ["zero-password@0.0.2", "", { "peerDependencies": { "typescript": "^5" } }, "sha512-UQgpYpqu4ZxpH9b8PPO4kHPrsBkmAVQNZ+KMTptAV3eRGYEc3XSD1l7/09wdCEktR4b2BriY+vbQln6Ksgwg1g=="],
+    "zero-password": ["zero-password@0.1.0", "", {}, "sha512-4+dKdsOsgSOP43cjHAmg8pw+NDwrKazYe1nKT995dkZb0iXjbLxQs+GojNFkBVT1C8evHaqT/kSpKgZhMUyzxQ=="],
 
     "zod": ["zod@4.3.6", "", {}, "sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg=="],
 
