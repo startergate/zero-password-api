@@ -38,7 +38,7 @@
 
 - `GET /api/{domain}`
 - `{domain}` 은 익스텐션이 보낸 현재 탭의 호스트 이름이다.
-- **[계획]** `GET`, `HEAD` 만 받고 나머지 메서드는 `405`.
+- `GET`, `HEAD` 만 받고 나머지 메서드는 `405` (App Router 기본 동작).
 
 ### 2.2 응답
 
@@ -82,8 +82,8 @@
 
 ### 2.8 위치
 
-- 지금 API 는 Pages Router(`pages/api/[domain].ts`), 화면은 App Router(`app/`)에 있다.
-- **[계획]** API 를 `app/api/[domain]/route.ts` 로 옮겨 App Router 로 통일한다. 주소와 응답은 그대로이고 `next.config.ts` 의 `outputFileTracingIncludes` 키만 새 경로에 맞춘다.
+- API 는 `app/api/[domain]/route.ts`, 화면은 `app/` 에 있어 모두 App Router 를 쓴다.
+- `next.config.ts` 의 `outputFileTracingIncludes` 키(`/api/\[domain\]`)가 이 경로에 맞춰져 있다. API 경로를 옮기면 이 키도 같이 고친다.
 
 ## 3. 페이지
 

@@ -1,14 +1,26 @@
 # zero-password-api
 
-Serves password rules from the full version of [zero-password](https://github.com/startergate/zero-password-db). The lite version (`zero-password/lite`) and the Chrome extension call this API.
+The server behind [0Password](https://0password.startergate.dev), a Chrome extension that shows a site's password rules on its login screen. 0Password never stores passwords; it only collects each site's password rules.
+
+This app serves:
+
+- the rule lookup API that the extension calls through `zero-password/lite`
+- the landing page and the privacy policy
+
+It is one Next.js app deployed on Vercel at `https://0password.startergate.dev`.
+
+## Related repositories
+
+- [zero-password-db](https://github.com/startergate/zero-password-db): the rule database and the `zero-password` npm package. Rules are added there.
+- [zero-password-chrome](https://github.com/startergate/zero-password-chrome): the Chrome extension.
 
 ## API
 
 ### `GET /api/{domain}`
 
-`domain` is matched against the rule database.
+`domain` is the host name of the current tab. It is matched with `findRule` from `zero-password`: exact entry, then `www.`, then parent domains.
 
-- `200`: a rule was found. `domain` is the database entry that matched (it can differ from the requested domain once domain normalization lands), and `$ref` is already resolved.
+- `200`: a rule was found. `domain` is the database entry that matched, which can differ from the request (`login.coupang.com` matches `www.coupang.com`). `$ref` is already resolved.
 
   ```json
   { "domain": "nid.naver.com", "rule": { "length": { "min": 8, "max": 16 }, "...": "..." } }
@@ -20,41 +32,15 @@ Serves password rules from the full version of [zero-password](https://github.co
   { "error": "not_found" }
   ```
 
-Both responses are `application/json`. The `rule` object follows the `Rule` type exported by `zero-password`.
+Both responses are `application/json`. The `rule` object follows the `Rule` type exported by `zero-password`. Responses stay backward compatible: fields are only ever added, never removed or changed.
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
-## Getting Started
-
-First, run the development server:
+## Development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000. Before opening a pull request, run `bun run lint` and `bun run build`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Rule data comes from the `zero-password` package in `node_modules`, so a new rule appears here after the package is updated.

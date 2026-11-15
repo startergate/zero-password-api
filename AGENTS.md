@@ -26,6 +26,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ## 핵심 구조
 
-- `pages/api/[domain].ts`: `GET /api/{domain}`. `findRule` 로 규칙을 찾아 돌려준다.
+- `app/api/[domain]/route.ts`: `GET /api/{domain}`. `findRule` 로 규칙을 찾아 돌려준다.
 - `app/`: 랜딩 페이지와 레이아웃.
 - `next.config.ts`: `zero-password` 의 `databases/` 를 API 번들에 포함하는 `outputFileTracingIncludes` 설정. API 경로를 옮기면 이 키도 같이 고친다.
